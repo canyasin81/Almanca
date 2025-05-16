@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevinim - Günlük Almanca</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e57d4;
+            --secondary-color: #f5b461;
+            --dark-color: #2a2a3a;
+            --light-color: #f5f5ff;
+            --success-color: #28a745;
+            --article-der: #4e57d4;
+            --article-die: #cc64a2;
+            --article-das: #3cb371;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .app-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .app-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .app-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            padding-bottom: 100px; /* Footer için boşluk */
+        }
+
+        /* Sections & Cards */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(78, 87, 212, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .section-date {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            opacity: 0.7;
+        }
+
+        /* Cards */
+        .item-list {
+            list-style: none;
+        }
+
+        .item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .word-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .article[data-article="der"] {
+            background-color: var(--article-der);
+        }
+
+        .article[data-article="die"] {
+            background-color: var(--article-die);
+        }
+
+        .article[data-article="das"] {
+            background-color: var(--article-das);
+        }
+
+        .german-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            opacity: 0.8;
+            transition: var(--transition);
+            padding: 5px;
+        }
+
+        .action-btn:hover {
+            opacity: 1;
+        }
+
+        .audio-btn {
+            color: var(--success-color);
+        }
+
+        .favorite-btn.active {
+            color: var(--secondary-color);
+            opacity: 1;
+        }
+
+        .item-body {
+            padding: 15px;
+        }
+
+        .turkish-meaning {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .example-sentence {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--dark-color);
+            opacity: 0.8;
+            padding: 10px;
+            background-color: rgba(78, 87, 212, 0.05);
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* Sentence items */
+        .sentence-item .german-text {
+            font-size: 1.1rem;
+        }
+
+        .sentence-item .turkish-meaning {
+            margin-top: 5px;
+        }
+
+        /* Footer & Controls */
+        .app-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .control-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 3px 8px rgba(78, 87, 212, 0.3);
+        }
+
+        .control-button:hover {
+            background-color: #3a42b3;
+            transform: translateY(-2px);
+        }
+
+        .tab-control-button {
+            background-color: white;
+            color: var(--dark-color);
+            opacity: 0.7;
+            box-shadow: none;
+            transition: var(--transition);
+        }
+
+        .tab-control-button.active {
+            color: var(--primary-color);
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 3px;
+            background-color: rgba(78, 87, 212, 0.1);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0;
+            transition: width 0.4s ease;
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Loading animation */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--dark-color);
+            opacity: 0.5;
+        }
+
+        .loading i {
+            animation: spin 1s infinite linear;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background-color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            max-width: 90%;
+            animation: slideIn 0.3s forwards;
+        }
+
+        .notification.hide {
+            animation: slideOut 0.3s forwards;
+        }
+
+        .notification.success {
+            border-left: 5px solid var(--success-color);
+        }
+
+        .notification.error {
+            border-left: 5px solid #dc3545;
+        }
+
+        .notification.info {
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .notification-content {
+            margin-left: 5px;
+        }
+
+        @keyframes slideIn {
+            0% { transform: translate(-50%, -20px); opacity: 0; }
+            100% { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, -20px); opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .app-name {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+            
+            .german-text {
+                font-size: 1.1rem;
+            }
+            
+            .control-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        body.dark {
+            --light-color: #121212;
+            --dark-color: #e1e1e1;
+            background-color: #121212;
+        }
+
+        body.dark .item {
+            background-color: #1e1e2d;
+        }
+
+        body.dark .app-footer {
+            background-color: #1e1e2d;
+        }
+
+        body.dark .tab-control-button {
+            background-color: #1e1e2d;
+            color: #e1e1e1;
+        }
+
+        body.dark .example-sentence {
+            background-color: rgba(78, 87, 212, 0.15);
+        }
+
+        body.dark .notification {
+            background-color: #1e1e2d;
+            color: #e1e1e1;
+        }
+
+        /* Boş Durum Göstergesi */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--dark-color);
+            opacity: 0.7;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="dark-mode-toggle" class="dark-mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="app-logo">
+            <i class="fas fa-language logo-icon"></i>
+            <h1 class="app-name">Nevinim</h1>
+        </div>
+        <p class="app-subtitle">Günlük Almanca Öğrenme Asistanı</p>
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Kelimeler Tab -->
+        <div id="words-tab" class="tab-content active">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Günün Kelimeleri</h2>
+                    <div class="section-date" id="current-date">17 Mayıs 2025</div>
+                </div>
+                <div id="word-list" class="item-list">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch"></i>
+                        <p>Kelimeler yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cümleler Tab -->
+        <div id="sentences-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Günün Cümleleri</h2>
+                    <div class="section-date" id="current-date-sentences">17 Mayıs 2025</div>
+                </div>
+                <div id="sentence-list" class="item-list">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch"></i>
+                        <p>Cümleler yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favoriler Tab -->
+        <div id="favorites-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Favorilerim</h2>
+                </div>
+                <div id="favorites-list" class="item-list">
+                    <div class="loading">
+                        <i class="fas fa-circle-notch"></i>
+                        <p>Favoriler yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <button id="words-btn" class="control-button tab-control-button active">
+            <i class="fas fa-book"></i>
+            <span>Kelimeler</span>
+        </button>
+        <button id="sentences-btn" class="control-button tab-control-button">
+            <i class="fas fa-comment-alt"></i>
+            <span>Cümleler</span>
+        </button>
+        <button id="favorites-btn" class="control-button tab-control-button">
+            <i class="fas fa-star"></i>
+            <span>Favoriler</span>
+        </button>
+        <button id="refresh-button" class="control-button">
+            <i class="fas fa-sync-alt"></i>
+            <span>Yenile</span>
+        </button>
+    </footer>
+
+    <script>
+        // --- Veritabanı ---
+        const allWords = [
+            { german: "Haus", article: "das", turkish: "Ev", example: "Das ist mein Haus." },
+            { german: "Auto", article: "das", turkish: "Araba", example: "Ich habe ein Auto." },
+            { german: "Buch", article: "das", turkish: "Kitap", example: "Ich lese ein Buch." },
+            { german: "Tisch", article: "der", turkish: "Masa", example: "Der Tisch ist groß." },
+            { german: "Stuhl", article: "der", turkish: "Sandalye", example: "Ein Stuhl ist hier." },
+            { german: "Katze", article: "die", turkish: "Kedi", example: "Die Katze schläft." },
+            { german: "Hund", article: "der", turkish: "Köpek", example: "Ich mag Hunde." },
+            { german: "Fenster", article: "das", turkish: "Pencere", example: "Das Fenster ist offen." },
+            { german: "Tür", article: "die", turkish: "Kapı", example: "Mach die Tür zu!" },
+            { german: "Wasser", article: "das", turkish: "Su", example: "Ich trinke Wasser." },
+            { german: "Mann", article: "der", turkish: "Adam", example: "Der Mann liest die Zeitung." },
+            { german: "Frau", article: "die", turkish: "Kadın", example: "Die Frau kocht." },
+            { german: "Kind", article: "das", turkish: "Çocuk", example: "Das Kind spielt." },
+            { german: "Apfel", article: "der", turkish: "Elma", example: "Ich esse einen Apfel." },
+            { german: "Milch", article: "die", turkish: "Süt", example: "Möchtest du Milch?" },
+            { german: "Brot", article: "das", turkish: "Ekmek", example: "Ich kaufe Brot." },
+            { german: "Stadt", article: "die", turkish: "Şehir", example: "Die Stadt ist schön." },
+            { german: "Blume", article: "die", turkish: "Çiçek", example: "Die Blume ist rot." },
+            { german: "Ball", article: "der", turkish: "Top", example: "Der Ball ist rund." },
+            { german: "Tasche", article: "die", turkish: "Çanta", example: "Die Tasche ist schwer." },
+            { german: "Schule", article: "die", turkish: "Okul", example: "Die Schule beginnt um 8 Uhr." },
+            { german: "Tag", article: "der", turkish: "Gün", example: "Heute ist ein schöner Tag." },
+            { german: "Nacht", article: "die", turkish: "Gece", example: "Die Nacht ist ruhig." },
+            { german: "Hand", article: "die", turkish: "El", example: "Gib mir deine Hand." },
+            { german: "Kopf", article: "der", turkish: "Kafa", example: "Mein Kopf tut weh." }
+        ];
+
+        const allSentences = [
+            { german: "Hallo!", turkish: "Merhaba!" },
+            { german: "Wie geht es dir?", turkish: "Nasılsın?" },
+            { german: "Mir geht es gut, danke.", turkish: "Ben iyiyim, teşekkürler." },
+            { german: "Ich heiße [Adınız].", turkish: "Adım [Adınız]." },
+            { german: "Woher kommst du?", turkish: "Nerelisin?" },
+            { german: "Ich komme aus der Türkei.", turkish: "Ben Türkiye'den geliyorum." },
+            { german: "Danke schön!", turkish: "Çok teşekkür ederim!" },
+            { german: "Bitte sehr!", turkish: "Rica ederim!" },
+            { german: "Ja", turkish: "Evet" },
+            { german: "Nein", turkish: "Hayır" },
+            { german: "Entschuldigung!", turkish: "Afedersiniz!" },
+            { german: "Sprechen Sie Deutsch?", turkish: "Almanca konuşuyor musunuz?" },
+            { german: "Ich verstehe nicht.", turkish: "Anlamıyorum." },
+            { german: "Kannst du mir helfen?", turkish: "Bana yardım edebilir misin?" },
+            { german: "Was kostet das?", turkish: "Bu ne kadar?" },
+            { german: "Guten Morgen!", turkish: "Günaydın!" },
+            { german: "Guten Tag!", turkish: "İyi günler!" },
+            { german: "Guten Abend!", turkish: "İyi akşamlar!" },
+            { german: "Gute Nacht!", turkish: "İyi geceler!" },
+            { german: "Wie heißt du?", turkish: "Adın ne?" },
+            { german: "Ich bin Student/Studentin.", turkish: "Ben öğrenciyim." },
+            { german: "Wie alt bist du?", turkish: "Kaç yaşındasın?" },
+            { german: "Ich bin ... Jahre alt.", turkish: "Ben ... yaşındayım." },
+            { german: "Wo wohnst du?", turkish: "Nerede yaşıyorsun?" },
+            { german: "Ich wohne in ...", turkish: "Ben ... 'da yaşıyorum." }
+        ];
+
+        // --- Uygulama Fonksiyonları ---
+        
+        // Favoriler için localStorage'dan veri alma (try-catch ile hata yönetimi ekledim)
+        let favorites = [];
+        try {
+            const savedFavorites = localStorage.getItem('nevinim-favorites');
+            favorites = savedFavorites ? JSON.parse(savedFavorites) : [];
+        } catch (error) {
+            console.error("Favoriler yüklenemedi:", error);
+            favorites = [];
+        }
+        
+        // Tarih formatlama fonksiyonu
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('tr-TR', options);
+        }
+        
+        // Rastgele kelime seçme
+        function selectRandomWords(count = 5) {
+            // Veritabanından rastgele kelime seçimi
+            const shuffled = [...allWords].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+        
+        // Rastgele cümle seçme
+        function selectRandomSentences(count = 5) {
+            // Veritabanından rastgele cümle seçimi
+            const shuffled = [...allSentences].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+        
+        // Favorilere ekleme/çıkarma
+        function toggleFavorite(item, type) {
+            const favoriteIndex = favorites.findIndex(fav => 
+                fav.type === type && fav.german === item.german);
+                
+            if (favoriteIndex === -1) {
+                // Favorilerde yoksa ekle
+                favorites.push({...item, type});
+            } else {
+                // Favorilerde varsa çıkar
+                favorites.splice(favoriteIndex, 1);
+            }
+            
+            // LocalStorage'a kaydet
+            try {
+                localStorage.setItem('nevinim-favorites', JSON.stringify(favorites));
+            } catch (error) {
+                console.error("Favoriler kaydedilemedi:", error);
+                showNotification('Favoriler kaydedilemedi', 'error');
+            }
+            
+            // Favoriler tabını güncelle
+            if (document.getElementById('favorites-tab').classList.contains('active')) {
+                renderFavorites();
+            }
+            
+            return favoriteIndex === -1; // eklendi mi?
+        }
+        
+        // Kelime kartı oluşturma
+        function createWordCard(word) {
+            const isFavorite = favorites.some(fav => fav.type === 'word' && fav.german === word.german);
+            
+            const card = document.createElement('div');
+            card.classList.add('item');
+            
+            // Üst kısım - Almanca kelime ve butonlar
+            const cardHeader = document.createElement('div');
+            cardHeader.classList.add('item-header');
+            
+            const wordContent = document.createElement('div');
+            wordContent.classList.add('word-content');
+            
+            const articleSpan = document.createElement('span');
+            articleSpan.classList.add('article');
+            articleSpan.setAttribute('data-article', word.article);
+            articleSpan.textContent = word.article;
+            
+            const germanText = document.createElement('span');
+            germanText.classList.add('german-text');
+            germanText.textContent = word.german;
+            
+            wordContent.appendChild(articleSpan);
+            wordContent.appendChild(germanText);
+            
+            const actions = document.createElement('div');
+            actions.classList.add('actions');
+            
+            const audioButton = document.createElement('button');
+            audioButton.classList.add('action-btn', 'audio-btn');
+            audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            audioButton.addEventListener('click', () => {
+                // Ses dosyası olmadığı için sadece bildirim gösteriyoruz
+                showNotification('Bu özellik şu anda mevcut değil', 'info');
+            });
+            
+            const favoriteButton = document.createElement('button');
+            favoriteButton.classList.add('action-btn', 'favorite-btn');
+            if (isFavorite) favoriteButton.classList.add('active');
+            favoriteButton.innerHTML = '<i class="fas fa-star"></i>';
+            favoriteButton.addEventListener('click', () => {
+                const added = toggleFavorite(word, 'word');
+                favoriteButton.classList.toggle('active', added);
+                showNotification(added ? 'Favorilere eklendi' : 'Favorilerden çıkarıldı', 'success');
+            });
+            
+            actions.appendChild(audioButton);
+            actions.appendChild(favoriteButton);
+            
+            cardHeader.appendChild(wordContent);
+            cardHeader.appendChild(actions);
+            
+            // Alt kısım - Türkçe anlamı ve örnek cümle
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('item-body');
+            
+            const turkishMeaning = document.createElement('div');
+            turkishMeaning.classList.add('turkish-meaning');
+            turkishMeaning.textContent = word.turkish;
+            
+            cardBody.appendChild(turkishMeaning);
+            
+            if (word.example) {
+                const exampleSentence = document.createElement('div');
+                exampleSentence.classList.add('example-sentence');
+                exampleSentence.textContent = word.example;
+                cardBody.appendChild(exampleSentence);
+            }
+            
+            card.appendChild(cardHeader);
+            card.appendChild(cardBody);
+            
+            return card;
+        }
+        
+        // Cümle kartı oluşturma
+        function createSentenceCard(sentence) {
+            const isFavorite = favorites.some(fav => fav.type === 'sentence' && fav.german === sentence.german);
+            
+            const card = document.createElement('div');
+            card.classList.add('item', 'sentence-item');
+            
+            // Üst kısım - Almanca cümle ve butonlar
+            const cardHeader = document.createElement('div');
+            cardHeader.classList.add('item-header');
+            
+            const germanText = document.createElement('span');
+            germanText.classList.add('german-text');
+            germanText.textContent = sentence.german;
+            
+            const actions = document.createElement('div');
+            actions.classList.add('actions');
+            
+            const audioButton = document.createElement('button');
+            audioButton.classList.add('action-btn', 'audio-btn');
+            audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            audioButton.addEventListener('click', () => {
+                // Ses dosyası olmadığı için sadece bildirim gösteriyoruz
+                showNotification('Bu özellik şu anda mevcut değil', 'info');
+            });
+            
+            const favoriteButton = document.createElement('button');
+            favoriteButton.classList.add('action-btn', 'favorite-btn');
+            if (isFavorite) favoriteButton.classList.add('active');
+            favoriteButton.innerHTML = '<i class="fas fa-star"></i>';
+            favoriteButton.addEventListener('click', () => {
+                const added = toggleFavorite(sentence, 'sentence');
+                favoriteButton.classList.toggle('active', added);
+                showNotification(added ? 'Favorilere eklendi' : 'Favorilerden çıkarıldı', 'success');
+            });
+            
+            actions.appendChild(audioButton);
+            actions.appendChild(favoriteButton);
+            
+            cardHeader.appendChild(germanText);
+            cardHeader.appendChild(actions);
+            
+            // Alt kısım - Türkçe anlamı
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('item-body');
+            
+            const turkishMeaning = document.createElement('div');
+            turkishMeaning.classList.add('turkish-meaning');
+            turkishMeaning.textContent = sentence.turkish;
+            
+            cardBody.appendChild(turkishMeaning);
+            
+            card.appendChild(cardHeader);
+            card.appendChild(cardBody);
+            
+            return card;
+        }
+        
+        // Kelime listesini render etme
+        function renderWords() {
+            const container = document.getElementById('word-list');
+            container.innerHTML = ''; // İçeriği temizle
+            
+            const dailyWords = selectRandomWords();
+            
+            if (dailyWords.length === 0) {
+                showEmptyState(container, 'Güncel kelime bulunamadı', 'fa-book');
+                return;
+            }
+            
+            // İlerleme çubuğu
+            updateProgress(0);
+            
+            dailyWords.forEach((word, index) => {
+                const card = createWordCard(word);
+                container.appendChild(card);
+                
+                // Kart eklendiğinde ilerleme çubuğunu güncelle
+                setTimeout(() => {
+                    updateProgress((index + 1) / dailyWords.length * 100);
+                }, 100 + index * 100);
+            });
+        }
+        
+        // Cümle listesini render etme
+        function renderSentences() {
+            const container = document.getElementById('sentence-list');
+            container.innerHTML = ''; // İçeriği temizle
+            
+            const dailySentences = selectRandomSentences();
+            
+            if (dailySentences.length === 0) {
+                showEmptyState(container, 'Güncel cümle bulunamadı', 'fa-comment-slash');
+                return;
+            }
+            
+            // İlerleme çubuğu
+            updateProgress(0);
+            
+            dailySentences.forEach((sentence, index) => {
+                const card = createSentenceCard(sentence);
+                container.appendChild(card);
+                
+                // Kart eklendiğinde ilerleme çubuğunu güncelle
+                setTimeout(() => {
+                    updateProgress((index + 1) / dailySentences.length * 100);
+                }, 100 + index * 100);
+            });
+        }
+        
+        // Favorileri render etme
+        function renderFavorites() {
+            const container = document.getElementById('favorites-list');
+            container.innerHTML = ''; // İçeriği temizle
+            
+            if (favorites.length === 0) {
+                showEmptyState(container, 'Henüz favori eklenmemiş', 'fa-heart');
+                return;
+            }
+            
+            // İlerleme çubuğu
+            updateProgress(0);
+            
+            favorites.forEach((item, index) => {
+                let card;
+                if (item.type === 'word') {
+                    card = createWordCard(item);
+                } else {
+                    card = createSentenceCard(item);
+                }
+                container.appendChild(card);
+                
+                // Kart eklendiğinde ilerleme çubuğunu güncelle
+                setTimeout(() => {
+                    updateProgress((index + 1) / favorites.length * 100);
+                }, 100 + index * 50);
+            });
+        }
+        
+        // Boş durum göstergesi
+        function showEmptyState(container, message, icon) {
+            const emptyState = document.createElement('div');
+            emptyState.classList.add('empty-state');
+            emptyState.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <p>${message}</p>
+            `;
+            container.appendChild(emptyState);
+        }
+        
+        // Bildirim gösterme fonksiyonu
+        function showNotification(message, type = 'info') {
+            // Eğer zaten var olan bir bildirim varsa sil
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<div class="notification-content">${message}</div>`;
+            
+            document.body.appendChild(notification);
+            
+            // 3 saniye sonra otomatik kapat
+            setTimeout(() => {
+                notification.classList.add('hide');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+        
+        // İlerleme çubuğu güncelleme
+        function updateProgress(percentage) {
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+        
+        // Tab değiştirme fonksiyonu
+        function switchTab(tabId) {
+            // Tüm tabları gizle
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Tab butonlarını pasif yap
+            document.querySelectorAll('.tab-control-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Seçilen tabı göster
+            document.getElementById(tabId).classList.add('active');
+            
+            // İlgili butonu aktifleştir
+            const btnId = tabId.replace('-tab', '-btn');
+            document.getElementById(btnId).classList.add('active');
+            
+            // İlerleme çubuğunu sıfırla
+            updateProgress(0);
+            
+            // Tabı localStorage'a kaydet
+            try {
+                localStorage.setItem('nevinim-active-tab', tabId);
+            } catch (error) {
+                console.error("Tab tercihi kaydedilemedi:", error);
+            }
+        }
+        
+        // Karanlık mod değiştirme
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            
+            // Icon güncelleme
+            const icon = document.querySelector('.dark-mode i');
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            
+            // LocalStorage'a kaydet
+            try {
+                localStorage.setItem('nevinim-dark-mode', isDark ? 'dark' : 'light');
+            } catch (error) {
+                console.error("Tema tercihi kaydedilemedi:", error);
+            }
+        }
+        
+        // --- Uygulama Başlatma ---
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Güncel tarihi ayarla
+                const today = new Date();
+                const formattedDate = formatDate(today);
+                document.querySelectorAll('#current-date, #current-date-sentences').forEach(el => {
+                    el.textContent = formattedDate;
+                });
+                
+                // Karanlık mod ayarını uygula
+                try {
+                    const darkModeSetting = localStorage.getItem('nevinim-dark-mode');
+                    if (darkModeSetting === 'dark') {
+                        document.body.classList.add('dark');
+                        document.querySelector('.dark-mode i').className = 'fas fa-sun';
+                    }
+                } catch (error) {
+                    console.error("Tema tercihi yüklenemedi:", error);
+                }
+                
+                // Verileri yükle
+                renderWords();
+                
+                // Yenile butonuna event listener ekle
+                document.getElementById('refresh-button').addEventListener('click', () => {
+                    const activeTab = document.querySelector('.tab-content.active').id;
+                    
+                    if (activeTab === 'words-tab') {
+                        renderWords();
+                    } else if (activeTab === 'sentences-tab') {
+                        renderSentences();
+                    } else if (activeTab === 'favorites-tab') {
+                        renderFavorites();
+                    }
+                    
+                    showNotification('İçerik yenilendi!', 'success');
+                });
+                
+                // Tab butonlarına event listener ekle
+                document.getElementById('words-btn').addEventListener('click', () => {
+                    switchTab('words-tab');
+                });
+                document.getElementById('sentences-btn').addEventListener('click', () => {
+                    switchTab('sentences-tab');
+                    renderSentences(); // İlk kez tabı açtığında içeriği yükle
+                });
+                document.getElementById('favorites-btn').addEventListener('click', () => {
+                    switchTab('favorites-tab');
+                    renderFavorites(); // İlk kez tabı açtığında içeriği yükle
+                });
+                
+                // Karanlık mod butonuna event listener ekle
+                document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+                
+                // Kaydedilmiş aktif tabı yükle
+                try {
+                    const savedTab = localStorage.getItem('nevinim-active-tab');
+                    if (savedTab) {
+                        switchTab(savedTab);
+                        
+                        // İlgili içeriği yükle
+                        if (savedTab === 'sentences-tab') {
+                            renderSentences();
+                        } else if (savedTab === 'favorites-tab') {
+                            renderFavorites();
+                        }
+                    }
+                } catch (error) {
+                    console.error("Kaydedilmiş tab yüklenemedi:", error);
+                }
+                
+            } catch (error) {
+                console.error("Uygulama başlatılırken hata oluştu:", error);
+                showNotification('Bir hata oluştu. Lütfen sayfayı yenileyin.', 'error');
+            }
+        });
+
+        // Ses çalma hata kontorlü ile
+        function playAudio(audioPath) {
+            // Ses dosyası yerine bildirim gösteriyoruz
+            showNotification('Ses özelliği henüz aktif değil', 'info');
+        }
+    </script>
+</body>
+</html>
